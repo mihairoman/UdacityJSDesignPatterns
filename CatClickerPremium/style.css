@@ -1,0 +1,75 @@
+#cat-list li:hover, img:hover {
+    cursor: pointer;
+}
+
+#cat-count {
+    font-size: 20px;
+}
+
+#cat-name::before, #cat-name::after {
+    content: '***';
+}
+
+#admin-content {
+    margin-top: 15px;
+}
+
+#cat-form.hidden {
+    display: none;
+}
+
+#cat-form {
+    padding: 0 0 0 100px;
+}
+
+#cat-form, .form-group {
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+#admin-btn {
+    padding: 10px;
+    color: white;
+    background-color: crimson;
+    border: 0;
+    margin: 0 10px 0 0;
+    font-size: 18px;
+    line-height: 20px;
+    float: left;
+}
+
+#admin-btn:hover {
+    cursor: pointer;
+    background-color: royalblue;
+    color: yellow;
+}
+
+#cancel-btn, #save-btn {
+    padding: 8px;
+    margin-top: 5px;
+    border: 0;
+}
+
+#cancel-btn:hover, #save-btn:hover {
+    cursor: pointer;
+}
+
+#cancel-btn {
+    color: white;
+    background-color: #333;
+}
+
+#save-btn {
+    color: white;
+    background-color: orchid;
+}
+
+.isAdmin {}
+
+in {}
+
+n {}
+
+n {}

@@ -1,6 +1,7 @@
     /* ======= Model ======= */
 
     var model = {
+        isAdmin: false,
         currentCat: null,
         cats: [{
             clickCount: 0,
@@ -61,6 +62,14 @@
         incrementCounter: function() {
             model.currentCat.clickCount++;
             catView.render();
+        },
+
+        getAdminState: function() {
+            return model.isAdmin;
+        },
+
+        setAdminState: function(state) {
+            model.isAdmin = state;
         }
     };
 
@@ -79,6 +88,12 @@
             // on click, increment the current cat's counter
             this.catImageElem.addEventListener('click', function() {
                 octopus.incrementCounter();
+            });
+
+            var adminBtn = document.getElementById('admin-btn');
+            adminBtn.addEventListener('click', function(event) {
+                var isAdmin = octopus.getAdminState();
+
             });
 
             // render this view (update the DOM elements with the right values)
