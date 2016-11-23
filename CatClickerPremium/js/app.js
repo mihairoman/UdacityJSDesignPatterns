@@ -43,6 +43,7 @@
             // tell our views to initialize
             catListView.init();
             catView.init();
+            adminView.init();
         },
 
         getCurrentCat: function() {
@@ -62,6 +63,7 @@
         incrementCounter: function() {
             model.currentCat.clickCount++;
             catView.render();
+            adminView.updateFormCount();
         },
 
         getAdminState: function() {
@@ -70,6 +72,16 @@
 
         setAdminState: function(state) {
             model.isAdmin = state;
+            adminView.render();
+        },
+
+        updateCat: function(changedCat) {
+            var currCat = this.getCurrentCat();
+            currCat.name = changedCat.name;
+            currCat.imgSrc = changedCat.url;
+            currCat.clickCount = changedCat.clicks;
+            catListView.render();
+            catView.render();
         }
     };
 
@@ -88,12 +100,6 @@
             // on click, increment the current cat's counter
             this.catImageElem.addEventListener('click', function() {
                 octopus.incrementCounter();
-            });
-
-            var adminBtn = document.getElementById('admin-btn');
-            adminBtn.addEventListener('click', function(event) {
-                var isAdmin = octopus.getAdminState();
-
             });
 
             // render this view (update the DOM elements with the right values)
@@ -143,6 +149,7 @@
                     return function() {
                         octopus.setCurrentCat(catCopy);
                         catView.render();
+                        adminView.render();
                     };
                 })(cat));
 
@@ -151,6 +158,54 @@
             }
         }
     };
+
+    var adminView = {
+        init: function() {
+            this.adminBtn = document.getElementById('admin-btn');
+            this.cancelBtn = document.getElementById('cancel-btn');
+            this.saveBtn = document.getElementById('save-btn');
+            this.catForm = document.getElementById('cat-form');
+            this.formName = document.getElementsByName('form-name')[0];
+            this.formUrl = document.getElementsByName('form-url')[0];
+            this.formClicks = document.getElementsByName('form-clicks')[0];
+
+            this.adminBtn.addEventListener('click', function(event) {
+                var isAdmin = octopus.getAdminState();
+                if (!isAdmin) {
+                    octopus.setAdminState(true);
+                }
+            });
+
+            this.cancelBtn.addEventListener('click', function() {
+                octopus.setAdminState(false);
+            });
+
+            this.saveBtn.addEventListener('click', function() {
+                octopus.updateCat({
+                    name: adminView.formName.value,
+                    url: adminView.formUrl.value,
+                    clicks: adminView.formClicks.value
+                });
+            });
+        },
+
+        render: function() {
+            var isAdmin = octopus.getAdminState();
+            if (isAdmin) {
+                this.catForm.classList.remove('hidden');
+                var currCat = octopus.getCurrentCat();
+                this.formName.value = currCat.name;
+                this.formUrl.value = currCat.imgSrc;
+                this.formClicks.value = currCat.clickCount;
+            } else {
+                this.catForm.classList.add('hidden');
+            }
+        },
+
+        updateFormCount: function() {
+            this.formClicks.value = octopus.getCurrentCat().clickCount;
+        }
+    }
 
     // make it go!
     octopus.init();
