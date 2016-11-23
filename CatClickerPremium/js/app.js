@@ -80,8 +80,10 @@
             currCat.name = changedCat.name;
             currCat.imgSrc = changedCat.url;
             currCat.clickCount = changedCat.clicks;
+            this.setAdminState(false);
             catListView.render();
             catView.render();
+            adminView.render();
         }
     };
 
